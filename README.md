@@ -1,7 +1,7 @@
 # LabProjectSem2
 
 # Description
-Given a sound source your must be able to sample,encode and store the bit stream
+Given a sound source your must be able to *sample*,*encode* and *store* the bit stream
 in an SD card. During playback you must be able to do minor adjustments such as
 changing its pitch. Your solution must be able to do the following tasks given below
 ### (a) Record and save multiple voice recordings
@@ -13,4 +13,5 @@ PCM. You are encouraged to add more features to the voice recorder if possible.
 Your end product should be presented with a well designed PCB along with a
 proper enclosure . A LCD should be used to provide a simple UI for making
 playback selections
-For storing data you can use a SD card module and for the microcontro
+For storing data you can use a SD card module and for the microcontroller
+you are encouraged to use **Atmega**
