@@ -1,44 +1,54 @@
-% closing previous windows and clearing wokspace
+% closing previous windows and clearing wokspace----------------------
 
 close all;
 clear all;
 
+% Audio file Loading-------------------------------------------------------
 
-% Audio file Loading--------------------------------------------------
-AudioFile = 'D:\soundfile\sound.wav'; % file name of audio file
+AudioFile = 'E:\songs\Ahankara_Nagare_-_Original__Ranidu_Lankage_Sarigama_lk-[AudioTrimmer.com].mp3'; % File name of audio file
 [snd,fs] = audioread(AudioFile); % Reads sound file to snd and sampling freq to fs
-%fs=16000 samples/sec
+%fs = 44100 samples/sec
 
-% Play sound
-player = audioplayer(snd, fs);%give the same sampling rate
-play(player);
+
+%Scaling or pitch shifting-----------------------------------------------------------------------------
+%snd=resample(snd,2,1); %resample(x,p,q) resamples the input sequence, x, at p/q times the original sample rate
+
 
 pt=30;% plotting time %30sec
-N = fs*pt; 
-t = (1:N)/fs;
+N = fs*pt;%samples taken 
+t = (0:N-1)/fs;
 
 %Time domain representation--------------------------------------------
 Xt = snd(1:N,1);
 
-% Normalize(Scale the output between -1,1)
-Xt = Xt/max(abs(Xt));
+%frequency shifting-------------------------------------------------------
+%f0=500;%shifting frequency(default f0=0)
+%Xt=cos(2*pi*f0*t).*Xt;% exp(2*pi*f0*t)*x(t)
 
-%subplot(2,1,1);
-%plot(t,Xt);
+%filtering--------------------------------------------------------------------------------------------
+
+[b a] = butter(20,0.5, 'low');
+Xt = filter(b,a,Xt);
+
+% Normalize(Scale the output between -1,1)
+nXt = Xt/max(abs(Xt));
+
+subplot(2,1,1);
+plot(t,nXt);
 xlabel ('Time (s)');
 ylabel ('Amplitude');
 title ('Audio Signal (Time Domain)');
 %----------------------------------------------------------------------
 
-%sound(Xt,fs);% play the part Xt under sampling rate of fs
+
 
 %Frequancy domain representation---------------------------------------
 
-Xf = abs(fft(Xt));
-f = 1/pt:1/pt:fs;
+Xf = abs(fftshift(fft(Xt)));
+f = (-N/2:N/2-1)*fs/N;
 
-%subplot(2,1,1);
-plot(f(1:10*fs),Xf(1:10*fs)/max(abs(Xf(1:10*fs))));
+subplot(2,1,2);
+plot(f,Xf);
 xlabel ('Frequency (Hz)');
 ylabel ('Magnitude');
 title ('Audio Signal (Frequency Domain)');
