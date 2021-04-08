@@ -1,9 +1,10 @@
-% closing previous windows and clearing wokspace----------------------
+% closing previous windows and clearing wokspace---------------------------
 
 close all;
 clear all;
 
-% Audio file Loading-------------------------------------------------------
+% Audio file
+% Loading------------------------------------------------------------------
 
 AudioFile = 'E:\songs\Ahankara_Nagare_-_Original__Ranidu_Lankage_Sarigama_lk-[AudioTrimmer.com].mp3'; % File name of audio file
 [snd,fs] = audioread(AudioFile); % Reads sound file to snd and sampling freq to fs
@@ -11,7 +12,7 @@ AudioFile = 'E:\songs\Ahankara_Nagare_-_Original__Ranidu_Lankage_Sarigama_lk-[Au
 
 
 %Scaling or pitch shifting-----------------------------------------------------------------------------
-%snd=resample(snd,2,1); %resample(x,p,q) resamples the input sequence, x, at p/q times the original sample rate
+snd=resample(snd,1,2); %resample(x,p,q) resamples the input sequence, x, at p/q times the original sample rate
 
 
 pt=30;% plotting time %30sec
@@ -26,8 +27,8 @@ Xt = snd(1:N,1);
 %Xt=cos(2*pi*f0*t).*Xt;% exp(2*pi*f0*t)*x(t)
 
 %filtering--------------------------------------------------------------------------------------------
-
-[b a] = butter(20,0.5, 'low');
+fc=5000;
+[b a] = butter(20,fc/25000, 'low');
 Xt = filter(b,a,Xt);
 
 % Normalize(Scale the output between -1,1)
