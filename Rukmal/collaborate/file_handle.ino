@@ -1,6 +1,6 @@
 void openfile(String filename){
   data_file = SD.open(filename,FILE_READ);
-  data_file.seek(44);
+  data_file.seek(50);
   Serial.println("open the file & go to 44th byte");
 }
 

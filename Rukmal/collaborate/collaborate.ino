@@ -19,8 +19,12 @@ int whichsample = 1;
 byte fshift =10;
 
 //echo effect
-byte status=0;
-char var1="0";
+char delay_data[2000];//create an array to stored delayed samples
+char var1;
+int i=0;
+bool status=1;
+short play_head=0;
+
  
 
 void setup() {
@@ -31,8 +35,8 @@ void setup() {
     while(1);//Try again
   }
   Serial.println("Done!");
-  openfile("10s_wav.wav");
-  start_play_echo();
+  
+  start_play_pitch("10s_wav.wav",0);
   
   
   
